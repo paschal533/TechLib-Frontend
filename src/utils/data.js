@@ -20,6 +20,10 @@ export const categories = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/ISO_C%2B%2B_Logo.svg/1200px-ISO_C%2B%2B_Logo.svg.png',
   },
   {
+    name: 'web3 development',
+    image: 'https://i.njkhanh.com/img/has-anyone-seen-web3-a-complete-roadmap-and-free-resources-to-become-web3-developer.png?v=1641696580',
+  },
+  {
     name: 'cyber security',
     image: 'https://static.kent.ac.uk/nexus/ems/1413.jpg',
   },
@@ -35,15 +39,12 @@ export const categories = [
     image: 'https://www.simplilearn.com/ice9/free_resources_article_thumb/Data-Science-vs.-Big-Data-vs.jpg',
   },
   {
-    name: 'quotes',
-    image: 'https://i.pinimg.com/236x/46/7c/17/467c17277badb00b638f8ec4da89a358.jpg',
+    name: 'java',
+    image: 'https://upload.wikimedia.org/wikipedia/en/3/30/Java_programming_language_logo.svg',
   }, {
-    name: 'cats',
-    image: 'https://i.pinimg.com/236x/6c/3c/52/6c3c529e8dadc7cffc4fddedd4caabe1.jpg',
-  }, {
-    name: 'dogs',
-    image: 'https://i.pinimg.com/236x/1b/c8/30/1bc83077e363db1a394bf6a64b071e9f.jpg',
-  },
+    name: 'app development',
+    image: 'https://www.designveloper.com/wp-content/uploads/2020/06/1_JUSbO0xkXPf2jtYLMSAZ8w.jpeg',
+  },  
   {
     name: 'others',
     image: 'https://i.pinimg.com/236x/2e/63/c8/2e63c82dfd49aca8dccf9de3f57e8588.jpg',
