@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
 import shareVideo from '../assets/share.mp4';
 import logo from '../assets/logowhite.png';
+import Image from '../assets/image2.jpg';
 
 import { client } from '../client';
 
@@ -26,13 +27,9 @@ const Login = () => {
   return (
     <div className="flex justify-start items-center flex-col h-screen">
       <div className=" relative w-full h-full">
-        <video
-          src={shareVideo}
-          type="video/mp4"
-          loop
-          controls={false}
-          muted
-          autoPlay
+        <img
+          src={Image}
+          alt="img"
           className="w-full h-full object-cover"
         />
 
