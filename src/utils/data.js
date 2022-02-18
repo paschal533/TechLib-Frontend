@@ -1,38 +1,38 @@
 export const categories = [
   {
-    name: 'cars',
-    image: 'https://i.pinimg.com/750x/eb/47/44/eb4744eaa3b3ccd89749fa3470e2b0de.jpg',
+    name: 'Javascript',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Unofficial_JavaScript_logo_2.svg/480px-Unofficial_JavaScript_logo_2.svg.png',
   },
   {
-    name: 'fitness',
-    image: 'https://i.pinimg.com/236x/25/14/29/251429345940a47490cc3d47dfe0a8eb.jpg',
+    name: 'python',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1200px-Python-logo-notext.svg.png',
   },
   {
     name: 'web development',
     image: 'https://images.pexels.com/photos/2004161/pexels-photo-2004161.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
   },
   {
-    name: 'websites',
-    image: 'https://i.pinimg.com/750x/66/b1/29/66b1296d36598122e6a4c5452b5a7149.jpg',
+    name: 'hacking',
+    image: 'https://images.pexels.com/photos/1089438/pexels-photo-1089438.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
   },
   {
-    name: 'photo',
-    image: 'https://i.pinimg.com/236x/72/8c/b4/728cb43f48ca762a75da645c121e5c57.jpg',
+    name: 'c++',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/ISO_C%2B%2B_Logo.svg/1200px-ISO_C%2B%2B_Logo.svg.png',
   },
   {
-    name: 'food',
-    image: 'https://i.pinimg.com/236x/7d/ef/15/7def15ac734837346dac01fad598fc87.jpg',
+    name: 'cyber security',
+    image: 'https://static.kent.ac.uk/nexus/ems/1413.jpg',
   },
   {
-    name: 'nature',
-    image: 'https://i.pinimg.com/236x/b9/82/d4/b982d49a1edd984c4faef745fd1f8479.jpg',
+    name: 'Artificial intelligent',
+    image: 'https://businesspost.ng/wp-content/uploads/2020/09/Artificial-Intelligence.jpg',
   },
   {
-    name: 'art',
-    image: 'https://i.pinimg.com/736x/f4/e5/ba/f4e5ba22311039662dd253be33bf5f0e.jpg',
+    name: 'Robotics',
+    image: 'https://www.iotworldtoday.com/files/2020/05/GettyImages-1184804468-789x432.jpg',
   }, {
-    name: 'travel',
-    image: 'https://i.pinimg.com/236x/fa/95/98/fa95986f2c408098531ca7cc78aee3a4.jpg',
+    name: 'data science',
+    image: 'https://www.simplilearn.com/ice9/free_resources_article_thumb/Data-Science-vs.-Big-Data-vs.jpg',
   },
   {
     name: 'quotes',
