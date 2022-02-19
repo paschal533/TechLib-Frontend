@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { HiMenu } from 'react-icons/hi';
+import { MdMenu } from 'react-icons/md';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { Link, Route, Routes } from 'react-router-dom';
 
@@ -35,7 +35,7 @@ const Home = () => {
       </div>
       <div className="flex md:hidden flex-row">
         <div className="p-2 w-full flex flex-row justify-between items-center shadow-md">
-          <HiMenu fontSize={40} className="cursor-pointer" onClick={() => setToggleSidebar(true)} />
+          <MdMenu fontSize={40} className="cursor-pointer" onClick={() => setToggleSidebar(true)} />
           <Link to="/">
             <img src={logo} alt="logo" className="w-28" />
           </Link>
@@ -56,7 +56,7 @@ const Home = () => {
         <Routes>
           <Route path="/user-profile/:userId" element={<UserProfile />} />
           <Route path="/*" element={<Pins user={user && user} />} />
-        </Routes>
+        </Routes> 
       </div>
     </div>
   );

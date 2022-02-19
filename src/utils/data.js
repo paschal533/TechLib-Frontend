@@ -44,7 +44,7 @@ export const categories = [
   }, {
     name: 'app development',
     image: 'https://www.designveloper.com/wp-content/uploads/2020/06/1_JUSbO0xkXPf2jtYLMSAZ8w.jpeg',
-  },  
+  },
   {
     name: 'others',
     image: 'https://i.pinimg.com/236x/2e/63/c8/2e63c82dfd49aca8dccf9de3f57e8588.jpg',
@@ -53,6 +53,11 @@ export const categories = [
 
 export const feedQuery = `*[_type == "pin"] | order(_createdAt desc) {
   image{
+    asset->{
+      url
+    }
+  },
+  file{
     asset->{
       url
     }
@@ -81,6 +86,11 @@ export const pinDetailQuery = (pinId) => {
         url
       }
     },
+    file{
+      asset->{
+        url
+      }
+    },  
     _id,
     title, 
     about,

@@ -1,5 +1,7 @@
 import React from 'react';
 import GoogleLogin from 'react-google-login';
+import FacebookLogin from 'react-facebook-login';
+import GitHubLogin from 'react-github-login';
 import { useNavigate } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
 import shareVideo from '../assets/share.mp4';
@@ -7,6 +9,13 @@ import logo from '../assets/logowhite.png';
 import Image from '../assets/image2.jpg';
 
 import { client } from '../client';
+
+const responseFacebook = (response) => {
+  console.log(response);
+}
+
+const onSuccess = response => console.log(response);
+const onFailure = response => console.error(response);
 
 const Login = () => {
   const navigate = useNavigate();
@@ -55,6 +64,17 @@ const Login = () => {
               onFailure={responseGoogle}
               cookiePolicy="single_host_origin"
             />
+            {/*<FacebookLogin
+              appId="656298462351610"
+              autoLoad
+              callback={responseFacebook}
+              render={renderProps => (
+                <button onClick={renderProps.onClick}>This is my custom FB button</button>
+              )}
+            />
+            <GitHubLogin clientId="ac56fad434a3a3c1561e"
+              onSuccess={onSuccess}
+              onFailure={onFailure}/>*/}
           </div>
         </div>
       </div>

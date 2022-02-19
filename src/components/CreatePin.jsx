@@ -16,6 +16,9 @@ const CreatePin = ({ user }) => {
   const [category, setCategory] = useState();
   const [imageAsset, setImageAsset] = useState();
   const [wrongImageType, setWrongImageType] = useState(false);
+  const [fileAsset, setFileAsset] = useState();
+  const [wrongFileType, setWrongFileType] = useState(false);
+  const [imageLoading, setImageLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -24,12 +27,12 @@ const CreatePin = ({ user }) => {
     // uploading asset to sanity
     if (selectedFile.type === 'image/png' || selectedFile.type === 'image/svg' || selectedFile.type === 'image/jpeg' || selectedFile.type === 'image/gif' || selectedFile.type === 'image/tiff') {
       setWrongImageType(false);
-      setLoading(true);
+      setImageLoading(true);
       client.assets
         .upload('image', selectedFile, { contentType: selectedFile.type, filename: selectedFile.name })
         .then((document) => {
           setImageAsset(document);
-          setLoading(false);
+          setImageLoading(false);
         })
         .catch((error) => {
           console.log('Upload failed:', error.message);
@@ -39,9 +42,31 @@ const CreatePin = ({ user }) => {
       setWrongImageType(true);
     }
   };
+  const uploadFile = (e) => {
+    const selectedFile = e.target.files[0];
+    console.log(selectedFile.type)
+    // uploading asset to sanity
+    if (selectedFile.type === 'application/pdf' || selectedFile.type === 'application/epub+zip') {
+      setWrongFileType(false);
+      setLoading(true);
+      client.assets
+        .upload('file', selectedFile, { contentType: selectedFile.type, filename: selectedFile.name })
+        .then((document) => {
+          console.log(document);
+          setFileAsset(document);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.log('Upload failed:', error.message);
+        });
+    } else {
+      setLoading(false);
+      setWrongFileType(true);
+    }
+  };
 
   const savePin = () => {
-    if (title && about && destination && imageAsset?._id && category) {
+    if (title && about && destination && imageAsset?._id && category && fileAsset._id) {
       const doc = {
         _type: 'pin',
         title,
@@ -52,6 +77,13 @@ const CreatePin = ({ user }) => {
           asset: {
             _type: 'reference',
             _ref: imageAsset?._id,
+          },
+        },
+        file: {
+          _type: 'file',
+          asset: {
+            _type: 'reference',
+            _ref: fileAsset?._id,
           },
         },
         userId: user._id,
@@ -83,12 +115,12 @@ const CreatePin = ({ user }) => {
       <div className=" flex lg:flex-row flex-col justify-center items-center bg-white lg:p-5 p-3 lg:w-4/5  w-full">
         <div className="bg-secondaryColor p-3 flex flex-0.7 w-full">
           <div className=" flex justify-center items-center flex-col border-2 border-dotted border-gray-300 p-3 w-full h-420">
-            {loading && (
+            {imageLoading && (
               <Spinner />
             )}
             {
               wrongImageType && (
-                <p>It&apos;s wrong file type.</p>
+                <p>It&apos;s wrong image file type.</p>
               )
             }
             {!imageAsset ? (
@@ -99,7 +131,7 @@ const CreatePin = ({ user }) => {
                     <p className="font-bold text-2xl">
                       <AiOutlineCloudUpload />
                     </p>
-                    <p className="text-lg">Click to upload</p>
+                    <p className="text-lg">Click to upload image</p>
                   </div>
 
                   <p className="mt-32 text-gray-400">
@@ -131,7 +163,6 @@ const CreatePin = ({ user }) => {
             )}
           </div>
         </div>
-
         <div className="flex flex-1 flex-col gap-6 lg:pl-5 mt-5 w-full">
           <input
             type="text"
@@ -181,6 +212,54 @@ const CreatePin = ({ user }) => {
                   </option>
                 ))}
               </select>
+            </div>
+            <div className=" flex lg:flex-row flex-col justify-center items-center bg-white lg:p-5 p-3 lg:w-4/5  w-full">
+            <div className="bg-secondaryColor p-3 flex flex-0.7 w-full">
+              <div className=" flex justify-center items-center flex-col border-2 border-dotted border-gray-300 p-3 w-full h-150">
+                {loading && (
+                  <Spinner />
+                )}
+                {
+                  wrongFileType && (
+                    <p>It&apos;s wrong file type.</p>
+                  )
+                }
+                {!fileAsset ? (
+                    // eslint-disable-next-line jsx-a11y/label-has-associated-control
+                    <label>
+                      <div className="flex flex-col items-center justify-center h-full">
+                        <div className="flex flex-col justify-center items-center">
+                          <p className="font-bold text-2xl">
+                            <AiOutlineCloudUpload />
+                          </p>
+                          <p className="text-lg">Click to upload a file</p>
+                        </div>
+
+                        <p className="mt-10 text-gray-400">
+                          Recommendation: Use high-quality PDF, EPUG less than 20MB
+                        </p>
+                      </div>
+                      <input
+                        type="file"
+                        name="upload-file"
+                        onChange={uploadFile}
+                        className="w-0 h-0"
+                      />
+                    </label>
+                  ) : (
+                    <div className="relative h-full">
+                       <p>{fileAsset?.originalFilename}</p>
+                      <button
+                        type="button"
+                        className="absolute bottom-3 right-3 p-3 rounded-full bg-white text-xl cursor-pointer outline-none hover:shadow-md transition-all duration-500 ease-in-out"
+                        onClick={() => setFileAsset(null)}
+                      >
+                        <MdDelete />
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
             <div className="flex justify-end items-end mt-5">
               <button

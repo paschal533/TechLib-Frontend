@@ -20,6 +20,7 @@ const PinDetail = ({ user }) => {
 
     if (query) {
       client.fetch(`${query}`).then((data) => {
+        console.log(data[0])
         setPinDetail(data[0]);
         console.log(data);
         if (data[0]) {
@@ -71,26 +72,21 @@ const PinDetail = ({ user }) => {
             />
           </div>
           <div className="w-full p-5 flex-1 xl:min-w-620">
-            <div className="flex items-center justify-between">
-              <div className="flex gap-2 items-center">
-                <a
-                  href={`${pinDetail.image.asset.url}?dl=`}
-                  download
-                  className="bg-secondaryColor p-2 text-xl rounded-full flex items-center justify-center text-dark opacity-75 hover:opacity-100"
-                >
-                  <MdDownloadForOffline />
-                </a>
-              </div>
-              <a href={pinDetail.destination} target="_blank" rel="noreferrer">
-                {pinDetail.destination?.slice(8)}
-              </a>
-            </div>
             <div>
               <h1 className="text-4xl font-bold break-words mt-3">
                 {pinDetail.title}
               </h1>
               <p className="mt-3">{pinDetail.about}</p>
             </div>
+            <div className="flex mt-7 gap-2 items-center">
+              <a
+                href={`${pinDetail.file.asset.url}?dl=`}
+                download
+                className="bg-red-500 p-2 text-xl flex items-center justify-center text-white opacity-100 hover:opacity-100"
+              >
+                <MdDownloadForOffline /> download
+                </a>
+              </div>
             <Link to={`/user-profile/${pinDetail?.postedBy._id}`} className="flex gap-2 mt-5 items-center bg-white rounded-lg ">
               <img src={pinDetail?.postedBy.image} className="w-10 h-10 rounded-full" alt="user-profile" />
               <p className="font-bold">{pinDetail?.postedBy.userName}</p>
