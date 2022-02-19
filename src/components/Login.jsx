@@ -4,7 +4,6 @@ import FacebookLogin from 'react-facebook-login';
 import GitHubLogin from 'react-github-login';
 import { useNavigate } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
-import shareVideo from '../assets/share.mp4';
 import logo from '../assets/logowhite.png';
 import Image from '../assets/image2.jpg';
 
@@ -72,9 +71,9 @@ const Login = () => {
                 <button onClick={renderProps.onClick}>This is my custom FB button</button>
               )}
               />
-            <GitHubLogin clientId="d49a9226ffc9eee00271"
+            {/*<GitHubLogin clientId="d49a9226ffc9eee00271"
               onSuccess={onSuccess}
-              onFailure={onFailure}/> 
+              onFailure={onFailure}/>*/}
           </div>
         </div>
       </div>
