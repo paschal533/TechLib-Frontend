@@ -66,7 +66,7 @@ const Login = () => {
             />
             <FacebookLogin
               appId="488007309380767"
-              autoLoad={true}
+              autoLoad
               fields="name,email,picture"
               callback={responseFacebook}
               render={renderProps => (
