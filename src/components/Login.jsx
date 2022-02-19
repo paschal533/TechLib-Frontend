@@ -11,6 +11,7 @@ import { client } from '../client';
 
 const responseFacebook = (response) => {
   console.log(response);
+  
 }
 
 const onSuccess = response => console.log(response);
@@ -64,8 +65,9 @@ const Login = () => {
               cookiePolicy="single_host_origin"
             />
             <FacebookLogin
-              appId="656298462351610"
-              autoLoad
+              appId="488007309380767"
+              autoLoad={true}
+              fields="name,email,picture"
               callback={responseFacebook}
               render={renderProps => (
                 <button onClick={renderProps.onClick}>This is my custom FB button</button>
