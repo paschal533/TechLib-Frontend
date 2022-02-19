@@ -8,17 +8,28 @@ import logo from '../assets/logowhite.png';
 import Image from '../assets/image2.jpg';
 
 import { client } from '../client';
-
-const responseFacebook = (response) => {
-  console.log(response);
-  
-}
-
+ 
 const onSuccess = response => console.log(response);
 const onFailure = response => console.error(response);
 
 const Login = () => {
   const navigate = useNavigate();
+
+  const responseFacebook = (response) => {
+    console.log(response);
+    localStorage.setItem('user', JSON.stringify(response));
+    const { name, userID } = response;
+    const doc = {
+      _id: userID,
+      _type: 'user',
+      userName: name,
+      image: response.picture.data.url,
+    };
+      client.createIfNotExists(doc).then(() => {
+        navigate('/', { replace: true });
+      });
+    
+  }
   const responseGoogle = (response) => {
     localStorage.setItem('user', JSON.stringify(response.profileObj));
     const { name, googleId, imageUrl } = response.profileObj;
