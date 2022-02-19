@@ -25,11 +25,11 @@ const Login = () => {
       userName: name,
       image: response.picture.data.url,
     };
-      client.createIfNotExists(doc).then(() => {
-        navigate('/', { replace: true });
-      });
-    
-  }
+    client.createIfNotExists(doc).then(() => {
+      navigate('/', { replace: true });
+    });
+  };
+
   const responseGoogle = (response) => {
     localStorage.setItem('user', JSON.stringify(response.profileObj));
     const { name, googleId, imageUrl } = response.profileObj;
@@ -77,11 +77,10 @@ const Login = () => {
             />
             <FacebookLogin
               appId="488007309380767"
-              autoLoad
               fields="name,email,picture"
               callback={responseFacebook}
               render={renderProps => (
-                <button onClick={renderProps.onClick}>This is my custom FB button</button>
+                <button type="button" onClick={renderProps.onClick}>Sign in with facebook</button>
               )}
               />
             {/*<GitHubLogin clientId="d49a9226ffc9eee00271"
