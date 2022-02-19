@@ -64,17 +64,17 @@ const Login = () => {
               onFailure={responseGoogle}
               cookiePolicy="single_host_origin"
             />
-            {/*<FacebookLogin
+            <FacebookLogin
               appId="656298462351610"
               autoLoad
               callback={responseFacebook}
               render={renderProps => (
                 <button onClick={renderProps.onClick}>This is my custom FB button</button>
               )}
-            />
-            <GitHubLogin clientId="ac56fad434a3a3c1561e"
+              />
+            <GitHubLogin clientId="d49a9226ffc9eee00271"
               onSuccess={onSuccess}
-              onFailure={onFailure}/>*/}
+              onFailure={onFailure}/> 
           </div>
         </div>
       </div>

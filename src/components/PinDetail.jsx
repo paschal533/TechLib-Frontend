@@ -1,6 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { MdDownloadForOffline } from 'react-icons/md';
 import { Link, useParams } from 'react-router-dom';
+import { Document, Page } from 'react-pdf';
+import {
+  EpubViewer,
+  ReactEpubViewer
+} from 'react-epub-viewer';
 import { v4 as uuidv4 } from 'uuid';
 
 import { client, urlFor } from '../client';
@@ -14,6 +19,13 @@ const PinDetail = ({ user }) => {
   const [pinDetail, setPinDetail] = useState();
   const [comment, setComment] = useState('');
   const [addingComment, setAddingComment] = useState(false);
+  const [numPages, setNumPages] = useState(null);
+  const [pageNumber, setPageNumber] = useState(1);
+  const viewerRef = useRef(null);
+
+  const onDocumentLoadSuccess = ({ numPages }) => {
+    setNumPages(numPages);
+  }
 
   const fetchPinDetails = () => {
     const query = pinDetailQuery(pinId);
@@ -111,6 +123,20 @@ const PinDetail = ({ user }) => {
               <Link to={`/user-profile/${user._id}`}>
                 <img src={user.image} className="w-10 h-10 rounded-full cursor-pointer" alt="user-profile" />
               </Link>
+              <div>
+                <Document file={pinDetail.file.asset.url} onLoadSuccess={onDocumentLoadSuccess}>
+                  <Page pageNumber={pageNumber} />
+                </Document>
+                <p>
+                  Page {pageNumber} of {numPages}
+                </p>
+              </div>
+              <div style={{ height: "100%" }}>
+                <ReactEpubViewer 
+                  url={pinDetail.file.asset.url}
+                  ref={viewerRef}
+                />
+              </div>
               <input
                 className=" flex-1 border-gray-100 outline-none border-2 p-2 rounded-2xl focus:border-gray-300"
                 type="text"
