@@ -1,11 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { MdDownloadForOffline } from 'react-icons/md';
+import { AiOutlineRead, AiOutlineSave } from 'react-icons/ai';
 import { Link, useParams } from 'react-router-dom';
-import { Document, Page } from 'react-pdf';
-import {
-  EpubViewer,
-  ReactEpubViewer
-} from 'react-epub-viewer';
 import { v4 as uuidv4 } from 'uuid';
 
 import { client, urlFor } from '../client';
@@ -19,13 +14,30 @@ const PinDetail = ({ user }) => {
   const [pinDetail, setPinDetail] = useState();
   const [comment, setComment] = useState('');
   const [addingComment, setAddingComment] = useState(false);
-  const [numPages, setNumPages] = useState(null);
-  const [pageNumber, setPageNumber] = useState(1);
-  const viewerRef = useRef(null);
+  const [savingPost, setSavingPost] = useState(false);
 
-  const onDocumentLoadSuccess = ({ numPages }) => {
-    setNumPages(numPages);
-  }
+  const savePin = (id) => {
+    if (alreadySaved?.length === 0) {
+      setSavingPost(true);
+
+      client
+        .patch(id)
+        .setIfMissing({ save: [] })
+        .insert('after', 'save[-1]', [{
+          _key: uuidv4(),
+          userId: user?.googleId,
+          postedBy: {
+            _type: 'postedBy',
+            _ref: user?.googleId,
+          },
+        }])
+        .commit()
+        .then(() => {
+          window.location.reload();
+          setSavingPost(false);
+        });
+    }
+  };
 
   const fetchPinDetails = () => {
     const query = pinDetailQuery(pinId);
@@ -34,7 +46,6 @@ const PinDetail = ({ user }) => {
       client.fetch(`${query}`).then((data) => {
         console.log(data[0])
         setPinDetail(data[0]);
-        console.log(data);
         if (data[0]) {
           const query1 = pinDetailMorePinQuery(data[0]);
           client.fetch(query1).then((res) => {
@@ -48,6 +59,10 @@ const PinDetail = ({ user }) => {
   useEffect(() => {
     fetchPinDetails();
   }, [pinId]);
+
+  let alreadySaved =  pinDetail?.save?.filter((item) => item?.postedBy?._id === user?.googleId);
+
+  alreadySaved = alreadySaved?.length > 0 ? alreadySaved : [];
 
   const addComment = () => {
     if (comment) {
@@ -91,14 +106,25 @@ const PinDetail = ({ user }) => {
               <p className="mt-3">{pinDetail.about}</p>
             </div>
             <div className="flex mt-7 gap-2 items-center">
-              <a
-                href={`${pinDetail.file.asset.url}?dl=`}
-                download
-                className="bg-red-500 p-2 text-xl flex items-center justify-center text-white opacity-100 hover:opacity-100"
+            <a href={`readbook/${pinDetail.file.asset.url.slice(46)}`}
+                className="bg-blue-500 rounded-lg pl-3 pr-3 pt-2 pb-2 text-xl flex items-center justify-center text-white opacity-100 hover:opacity-100"
               >
-                <MdDownloadForOffline /> download
-                </a>
-              </div>
+                <AiOutlineRead /> Read
+              </a>
+              {alreadySaved?.length !== 0 ? (<a
+                  className="bg-red-500 rounded-lg pl-3 pr-3 pt-2 pb-2 text-xl flex items-center justify-center text-white opacity-100 hover:opacity-100"
+              >
+                  <AiOutlineSave /> Saved
+              </a>) : (<a
+                   onClick={(e) => {
+                    e.stopPropagation();
+                    savePin(pinDetail?._id);
+                  }}
+                  className="bg-red-500 rounded-lg pl-3 pr-3 pt-2 pb-2 text-xl flex items-center justify-center text-white opacity-100 hover:opacity-100"
+                >
+                 {pinDetail?.save?.length} <AiOutlineSave />  {savingPost ? 'Saving' : 'Save'} 
+              </a>)}
+            </div>
             <Link to={`/user-profile/${pinDetail?.postedBy._id}`} className="flex gap-2 mt-5 items-center bg-white rounded-lg ">
               <img src={pinDetail?.postedBy.image} className="w-10 h-10 rounded-full" alt="user-profile" />
               <p className="font-bold">{pinDetail?.postedBy.userName}</p>
@@ -123,20 +149,6 @@ const PinDetail = ({ user }) => {
               <Link to={`/user-profile/${user._id}`}>
                 <img src={user.image} className="w-10 h-10 rounded-full cursor-pointer" alt="user-profile" />
               </Link>
-              <div>
-                <Document file={pinDetail.file.asset.url} onLoadSuccess={onDocumentLoadSuccess}>
-                  <Page pageNumber={pageNumber} />
-                </Document>
-                <p>
-                  Page {pageNumber} of {numPages}
-                </p>
-              </div>
-              <div style={{ height: "100%" }}>
-                <ReactEpubViewer 
-                  url={pinDetail.file.asset.url}
-                  ref={viewerRef}
-                />
-              </div>
               <input
                 className=" flex-1 border-gray-100 outline-none border-2 p-2 rounded-2xl focus:border-gray-300"
                 type="text"

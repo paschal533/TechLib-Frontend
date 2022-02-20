@@ -46,7 +46,7 @@ const CreatePin = ({ user }) => {
     const selectedFile = e.target.files[0];
     console.log(selectedFile.type)
     // uploading asset to sanity
-    if (selectedFile.type === 'application/pdf' || selectedFile.type === 'application/epub+zip') {
+    if (selectedFile.type === 'application/epub+zip') {
       setWrongFileType(false);
       setLoading(true);
       client.assets
@@ -98,12 +98,12 @@ const CreatePin = ({ user }) => {
       });
     } else {
       setFields(true);
-
+      alert("Please add all fields.");
       setTimeout(
         () => {
           setFields(false);
         },
-        2000,
+        10000,
       );
     }
   };
@@ -236,7 +236,7 @@ const CreatePin = ({ user }) => {
                         </div>
 
                         <p className="mt-10 text-gray-400">
-                          Recommendation: Use high-quality PDF, EPUG less than 20MB
+                          Recommendation: Use high-quality EPUG less than 20MB
                         </p>
                       </div>
                       <input

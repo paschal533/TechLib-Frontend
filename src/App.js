@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 
-import { Login } from './components';
+import { Login, ReadBook } from './components';
 import Home from './container/Home';
 
 const App = () => {
@@ -17,6 +17,7 @@ const App = () => {
     <Routes>
       <Route path="login" element={<Login />} />
       <Route path="/*" element={<Home />} />
+      <Route path="pin-detail/readbook/n/:url" element={<ReadBook />} />
     </Routes>
   );
 };

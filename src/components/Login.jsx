@@ -1,21 +1,17 @@
 import React from 'react';
 import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
-import GitHubLogin from 'react-github-login';
 import { useNavigate } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
 import logo from '../assets/logowhite.png';
 import Image from '../assets/image2.jpg';
 
 import { client } from '../client';
- 
-const onSuccess = response => console.log(response);
-const onFailure = response => console.error(response);
 
 const Login = () => {
   const navigate = useNavigate();
 
-  /*const responseFacebook = (response) => {
+  const responseFacebook = (response) => {
     console.log(response);
     localStorage.setItem('user', JSON.stringify(response));
     const { name, userID } = response;
@@ -28,7 +24,7 @@ const Login = () => {
     client.createIfNotExists(doc).then(() => {
       navigate('/', { replace: true });
     });
-  };*/
+  };
 
   const responseGoogle = (response) => {
     localStorage.setItem('user', JSON.stringify(response.profileObj));
@@ -75,17 +71,14 @@ const Login = () => {
               onFailure={responseGoogle}
               cookiePolicy="single_host_origin"
             />
-            {/*<FacebookLogin
+            <FacebookLogin
               appId="488007309380767"
               fields="name,email,picture"
               callback={responseFacebook}
               render={renderProps => (
                 <button type="button" onClick={renderProps.onClick}>Sign in with facebook</button>
               )}
-              />*/}
-            {/*<GitHubLogin clientId="d49a9226ffc9eee00271"
-              onSuccess={onSuccess}
-              onFailure={onFailure}/>*/}
+              />
           </div>
         </div>
       </div>
