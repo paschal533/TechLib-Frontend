@@ -10,22 +10,7 @@ import { client } from '../client';
 
 const Login = () => {
   const navigate = useNavigate();
-
-  const responseFacebook = (response) => {
-    console.log(response);
-    localStorage.setItem('user', JSON.stringify(response));
-    const { name, userID } = response;
-    const doc = {
-      _id: userID,
-      _type: 'user',
-      userName: name,
-      image: response.picture.data.url,
-    };
-    client.createIfNotExists(doc).then(() => {
-      navigate('/', { replace: true });
-    });
-  };
-
+   
   const responseGoogle = (response) => {
     localStorage.setItem('user', JSON.stringify(response.profileObj));
     const { name, googleId, imageUrl } = response.profileObj;
@@ -71,14 +56,6 @@ const Login = () => {
               onFailure={responseGoogle}
               cookiePolicy="single_host_origin"
             />
-            <FacebookLogin
-              appId="488007309380767"
-              fields="name,email,picture"
-              callback={responseFacebook}
-              render={renderProps => (
-                <button type="button" onClick={renderProps.onClick}>Sign in with facebook</button>
-              )}
-              />
           </div>
         </div>
       </div>
