@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AiOutlineRead, AiOutlineSave } from 'react-icons/ai';
 import { Link, useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
@@ -15,6 +15,30 @@ const PinDetail = ({ user }) => {
   const [comment, setComment] = useState('');
   const [addingComment, setAddingComment] = useState(false);
   const [savingPost, setSavingPost] = useState(false);
+
+  const fetchPinDetails = () => {
+    const query = pinDetailQuery(pinId);
+
+    if (query) {
+      client.fetch(`${query}`).then((data) => {
+        setPinDetail(data[0]);
+        if (data[0]) {
+          const query1 = pinDetailMorePinQuery(data[0]);
+          client.fetch(query1).then((res) => {
+            setPins(res);
+          });
+        }
+      });
+    }
+  };
+
+  useEffect(() => {
+    fetchPinDetails();
+  }, [pinId]);
+
+  let alreadySaved = pinDetail?.save?.filter((item) => item?.postedBy?._id === user?.googleId);
+
+  alreadySaved = alreadySaved?.length > 0 ? alreadySaved : [];
 
   const savePin = (id) => {
     if (alreadySaved?.length === 0) {
@@ -38,30 +62,6 @@ const PinDetail = ({ user }) => {
         });
     }
   };
-
-  const fetchPinDetails = () => {
-    const query = pinDetailQuery(pinId);
-
-    if (query) {
-      client.fetch(`${query}`).then((data) => {
-        setPinDetail(data[0]);
-        if (data[0]) {
-          const query1 = pinDetailMorePinQuery(data[0]);
-          client.fetch(query1).then((res) => {
-            setPins(res);
-          });
-        }
-      });
-    }
-  };
-
-  useEffect(() => {
-    fetchPinDetails();
-  }, [pinId]);
-
-  let alreadySaved =  pinDetail?.save?.filter((item) => item?.postedBy?._id === user?.googleId);
-
-  alreadySaved = alreadySaved?.length > 0 ? alreadySaved : [];
 
   const addComment = () => {
     if (comment) {
@@ -105,24 +105,33 @@ const PinDetail = ({ user }) => {
               <p className="mt-3">{pinDetail.about}</p>
             </div>
             <div className="flex mt-7 gap-2 items-center">
-            <a href={`readbook/${pinDetail.file.asset.url.slice(46)}`}
+              <a
+                href={`readbook/${pinDetail.file.asset.url.slice(46)}`}
                 className="bg-blue-500 rounded-lg pl-3 pr-3 pt-2 pb-2 text-xl flex items-center justify-center text-white opacity-100 hover:opacity-100"
               >
                 <AiOutlineRead /> Read
               </a>
-              {alreadySaved?.length !== 0 ? (<a
-                  className="bg-red-500 rounded-lg pl-3 pr-3 pt-2 pb-2 text-xl flex items-center justify-center text-white opacity-100 hover:opacity-100"
-              >
-                  <AiOutlineSave /> Saved
-              </a>) : (<a
-                   onClick={(e) => {
-                    e.stopPropagation();
-                    savePin(pinDetail?._id);
-                  }}
-                  className="bg-red-500 rounded-lg pl-3 pr-3 pt-2 pb-2 text-xl flex items-center justify-center text-white opacity-100 hover:opacity-100"
-                >
-                 {pinDetail?.save?.length} <AiOutlineSave />  {savingPost ? 'Saving' : 'Save'} 
-              </a>)}
+              {alreadySaved?.length !== 0
+                ? (
+                  <button
+                    type="button"
+                    className="bg-red-500 rounded-lg pl-3 pr-3 pt-2 pb-2 text-xl flex items-center justify-center text-white opacity-100 hover:opacity-100"
+                  >
+                    <AiOutlineSave /> Saved
+                  </button>
+                )
+                : (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      savePin(pinDetail?._id);
+                    }}
+                    type="button"
+                    className="bg-red-500 rounded-lg pl-3 pr-3 pt-2 pb-2 text-xl flex items-center justify-center text-white opacity-100 hover:opacity-100"
+                  >
+                    {pinDetail?.save?.length} <AiOutlineSave />  {savingPost ? 'Saving' : 'Save'}
+                  </button>
+                )}
             </div>
             <Link to={`/user-profile/${pinDetail?.postedBy._id}`} className="flex gap-2 mt-5 items-center bg-white rounded-lg ">
               <img src={pinDetail?.postedBy.image} className="w-10 h-10 rounded-full" alt="user-profile" />

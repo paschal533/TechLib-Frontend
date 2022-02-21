@@ -34,8 +34,7 @@ const CreatePin = ({ user }) => {
           setImageAsset(document);
           setImageLoading(false);
         })
-        .catch((error) => {
-          console.log('Upload failed:', error.message);
+        .catch(() => {
         });
     } else {
       setLoading(false);
@@ -44,7 +43,6 @@ const CreatePin = ({ user }) => {
   };
   const uploadFile = (e) => {
     const selectedFile = e.target.files[0];
-    console.log(selectedFile.type)
     // uploading asset to sanity
     if (selectedFile.type === 'application/epub+zip') {
       setWrongFileType(false);
@@ -52,12 +50,10 @@ const CreatePin = ({ user }) => {
       client.assets
         .upload('file', selectedFile, { contentType: selectedFile.type, filename: selectedFile.name })
         .then((document) => {
-          console.log(document);
           setFileAsset(document);
           setLoading(false);
         })
-        .catch((error) => {
-          console.log('Upload failed:', error.message);
+        .catch(() => {
         });
     } else {
       setLoading(false);
@@ -98,7 +94,6 @@ const CreatePin = ({ user }) => {
       });
     } else {
       setFields(true);
-      alert("Please add all fields.");
       setTimeout(
         () => {
           setFields(false);
@@ -214,17 +209,15 @@ const CreatePin = ({ user }) => {
               </select>
             </div>
             <div className=" flex lg:flex-row flex-col justify-center items-center bg-white lg:p-5 p-3 lg:w-4/5  w-full">
-            <div className="bg-secondaryColor p-3 flex flex-0.7 w-full">
-              <div className=" flex justify-center items-center flex-col border-2 border-dotted border-gray-300 p-3 w-full h-150">
-                {loading && (
-                  <Spinner />
-                )}
-                {
-                  wrongFileType && (
+              <div className="bg-secondaryColor p-3 flex flex-0.7 w-full">
+                <div className=" flex justify-center items-center flex-col border-2 border-dotted border-gray-300 p-3 w-full h-150">
+                  {loading && (
+                    <Spinner />
+                  )}
+                  {wrongFileType && (
                     <p>It&apos;s wrong file type.</p>
-                  )
-                }
-                {!fileAsset ? (
+                  )}
+                  {!fileAsset ? (
                     // eslint-disable-next-line jsx-a11y/label-has-associated-control
                     <label>
                       <div className="flex flex-col items-center justify-center h-full">
@@ -248,7 +241,7 @@ const CreatePin = ({ user }) => {
                     </label>
                   ) : (
                     <div className="relative h-full">
-                       <p>{fileAsset?.originalFilename}</p>
+                      <p>{fileAsset?.originalFilename}</p>
                       <button
                         type="button"
                         className="absolute bottom-3 right-3 p-3 rounded-full bg-white text-xl cursor-pointer outline-none hover:shadow-md transition-all duration-500 ease-in-out"

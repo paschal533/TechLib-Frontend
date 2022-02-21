@@ -1,6 +1,6 @@
-import styled from 'styled-components'
-import breakpoint from 'styled-components-breakpoint'
- 
+import styled from 'styled-components';
+import breakpoint from 'styled-components-breakpoint';
+
 export const Container = styled.div`
   position: relative;
   width: 100%;
@@ -8,17 +8,19 @@ export const Container = styled.div`
   min-height: 100vh;
   background: linear-gradient(to bottom, #f2f2f2 0%, #333 100%);
   overflow: hidden;
-`
+`;
+
 export const ReaderContainer = styled.div`
   font-size: 16px;
   position: absolute;
-  top: ${props => (props.fullscreen ? 0 : 135)}px;
-  left: ${props => (props.fullscreen ? 0 : 1)}rem;
-  right: ${props => (props.fullscreen ? 0 : 1)}rem;
-  bottom: ${props => (props.fullscreen ? 0 : 1)}rem;
+  top: ${(props) => (props.fullscreen ? 0 : 135)}px;
+  left: ${(props) => (props.fullscreen ? 0 : 1)}rem;
+  right: ${(props) => (props.fullscreen ? 0 : 1)}rem;
+  bottom: ${(props) => (props.fullscreen ? 0 : 1)}rem;
   transition: all 0.6s ease;
-  ${props => !props.fullscreen && '0 0 5px rgba(0,0,0,.3);'};
-`
+  ${(props) => !props.fullscreen && '0 0 5px rgba(0,0,0,.3);'};
+`;
+
 export const Bar = styled.header`
   position: absolute;
   top: 10px;
@@ -28,7 +30,8 @@ export const Bar = styled.header`
     display: flex;
     align-items: flex-end;
   `};
-`
+`;
+
 export const ButtonWrapper = styled.div`
   ${breakpoint('mobile')`
     display: flex;
@@ -36,12 +39,14 @@ export const ButtonWrapper = styled.div`
     align-items: baseline;
     padding-top: 0.5rem;
   `};
-`
+`;
+
 export const LogoWrapper = styled.a`
   ${breakpoint('tablet')`
     margin-right: auto;
   `};
-`
+`;
+
 export const Logo = styled.img`
   width: 250px;
   height: auto;
@@ -53,7 +58,8 @@ export const Logo = styled.img`
     display: inline-block;
     margin-left: 2px;
   `};
-`
+`;
+
 const Button = styled.button`
   font-family: inherit;
   font-size: inherit;
@@ -63,7 +69,8 @@ const Button = styled.button`
   user-select: none;
   appearance: none;
   background: none;
-`
+`;
+
 export const GenericButton = styled(Button)`
   color: #808080;
   font-size: 12px;
@@ -73,7 +80,8 @@ export const GenericButton = styled(Button)`
     font-size: 16px;
     
   `};
-`
+`;
+
 export const CloseIcon = styled.i`
   vertical-align: middle;
   display: inline-block;
@@ -100,7 +108,8 @@ export const CloseIcon = styled.i`
   &:after {
     transform: rotate(-90deg);
   }
-`
+`;
+
 export const FontSizeButton = styled(Button)`
   position: fixed;
   bottom: 1.5rem;
@@ -109,4 +118,4 @@ export const FontSizeButton = styled(Button)`
   background: #eee;
   border-radius: 2px;
   padding: 0.5rem;
-`
+`;
