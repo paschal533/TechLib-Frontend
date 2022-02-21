@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { AiOutlineLogout } from 'react-icons/ai';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { GoogleLogout } from 'react-google-login';
 
 import { userCreatedPinsQuery, userQuery, userSavedPinsQuery } from '../utils/data';
@@ -59,7 +59,7 @@ const UserProfile = () => {
           <div className="flex flex-col justify-center items-center">
             <img
               className=" w-full h-370 2xl:h-510 shadow-lg object-cover"
-              src="https://source.unsplash.com/1600x900/?nature,photography,technology"
+              src="https://source.unsplash.com/1600x900/?technology,programming,coding,ai"
               alt="user-pic"
             />
             <img
@@ -119,8 +119,22 @@ const UserProfile = () => {
         </div>
 
         {pins?.length === 0 && (
-        <div className="flex justify-center font-bold items-center w-full text-1xl mt-2">
-          No Pins Found!
+        <div>
+          <div className="flex justify-center font-bold items-center w-full text-1xl mt-2">
+            No Ebook Found!
+          </div>
+          <div className="mt-3 sm:mt-4 flex lg:justify-start">
+            <div className="rounded-md shadow">
+              <Link to="/create-pin" className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10">
+                Create
+              </Link>
+            </div>
+            <div className="rounded-md shadow">
+              <Link to={`/explore/${userId}`} className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-red-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10">
+                Explore
+              </Link>
+            </div>
+          </div>
         </div>
         )}
       </div>
