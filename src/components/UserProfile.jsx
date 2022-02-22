@@ -119,18 +119,18 @@ const UserProfile = () => {
         </div>
 
         {pins?.length === 0 && (
-        <div>
+        <div className="justify-center items-center w-full">
           <div className="flex justify-center font-bold items-center w-full text-1xl mt-2">
             No Ebook Found!
           </div>
-          <div className="mt-3 sm:mt-4 flex lg:justify-start">
+          <div className="mt-3 sm:mt-4 flex justify-center items-center">
             <div className="rounded-md shadow">
-              <Link to="/create-pin" className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10">
+              <Link to="/create-pin" className="w-250 flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10">
                 Create
               </Link>
             </div>
-            <div className="rounded-md shadow">
-              <Link to={`/explore/${userId}`} className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-red-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10">
+            <div className="rounded-md ml-5 shadow">
+              <Link to={`/explore/${userId}`} className="w-250 flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-red-600 hover:bg-red-700 md:py-4 md:text-lg md:px-10">
                 Explore
               </Link>
             </div>

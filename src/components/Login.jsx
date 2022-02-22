@@ -2,6 +2,8 @@ import React from 'react';
 import GoogleLogin from 'react-google-login';
 import { useNavigate } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
+import { GrFacebookOption } from 'react-icons/gr';
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import logo from '../assets/logowhite.png';
 import Image from '../assets/image2.jpg';
 
@@ -9,9 +11,21 @@ import { client } from '../client';
 
 const Login = () => {
   const navigate = useNavigate();
+  const responseFacebook = (response) => {
+    const { name, id } = response;
+    const doc = {
+      _id: id,
+      _type: 'user',
+      userName: name,
+      image: response.picture.data.url,
+    };
+    localStorage.setItem('user', JSON.stringify(doc));
+    client.createIfNotExists(doc).then(() => {
+      navigate('/', { replace: true });
+    });
+  };
 
   const responseGoogle = (response) => {
-    localStorage.setItem('user', JSON.stringify(response.profileObj));
     const { name, googleId, imageUrl } = response.profileObj;
     const doc = {
       _id: googleId,
@@ -19,6 +33,7 @@ const Login = () => {
       userName: name,
       image: imageUrl,
     };
+    localStorage.setItem('user', JSON.stringify(doc));
     client.createIfNotExists(doc).then(() => {
       navigate('/', { replace: true });
     });
@@ -54,6 +69,22 @@ const Login = () => {
               onSuccess={responseGoogle}
               onFailure={responseGoogle}
               cookiePolicy="single_host_origin"
+            />
+          </div>
+          <div className="shadow-2xl">
+            <FacebookLogin
+              appId="488007309380767"
+              fields="name,email,picture"
+              callback={responseFacebook}
+              render={(renderProps) => (
+                <button
+                  type="button"
+                  className="bg-blue-500 flex text-white-500 btn p-3 mt-3 justify-center items-center rounded-lg cursor-pointer outline-none"
+                  onClick={renderProps.onClick}
+                >
+                  <GrFacebookOption /> Sign in with facebook
+                </button>
+              )}
             />
           </div>
         </div>
