@@ -73,7 +73,7 @@ const Login = () => {
           </div>
           <div className="shadow-2xl">
             <FacebookLogin
-              appId="488007309380767"
+              appId={REACT_APP_SANITY_FACEBOOK_ID}
               fields="name,email,picture"
               callback={responseFacebook}
               render={(renderProps) => (
