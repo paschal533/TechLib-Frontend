@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { AiTwotoneDelete } from 'react-icons/ai';
-import { BsFillArrowUpRightCircleFill } from 'react-icons/bs';
 
 import { client, urlFor } from '../client';
 
@@ -12,7 +11,7 @@ const Pin = ({ pin }) => {
 
   const navigate = useNavigate();
 
-  const { postedBy, image, _id, destination } = pin;
+  const { postedBy, image, _id } = pin;
 
   const user = localStorage.getItem('user') !== 'undefined' ? JSON.parse(localStorage.getItem('user')) : localStorage.clear();
 
@@ -84,32 +83,18 @@ const Pin = ({ pin }) => {
               )}
             </div>
             <div className=" flex justify-between items-center gap-2 w-full">
-              {destination?.slice(8).length > 0 ? (
-                <a
-                  href={destination}
-                  target="_blank"
-                  className="bg-white flex items-center gap-2 text-black font-bold p-2 pl-4 pr-4 rounded-full opacity-70 hover:opacity-100 hover:shadow-md"
-                  rel="noreferrer"
+              {postedBy?._id === user?.googleId && (
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    deletePin(_id);
+                  }}
+                  className="bg-white p-2 rounded-full w-8 h-8 flex items-center justify-center text-dark opacity-75 hover:opacity-100 outline-none"
                 >
-                  {' '}
-                  <BsFillArrowUpRightCircleFill />
-                  {destination?.slice(8, 17)}...
-                </a>
-              ) : undefined}
-              {
-           postedBy?._id === user?.googleId && (
-           <button
-             type="button"
-             onClick={(e) => {
-               e.stopPropagation();
-               deletePin(_id);
-             }}
-             className="bg-white p-2 rounded-full w-8 h-8 flex items-center justify-center text-dark opacity-75 hover:opacity-100 outline-none"
-           >
-             <AiTwotoneDelete />
-           </button>
-           )
-        }
+                  <AiTwotoneDelete />
+                </button>
+              )}
             </div>
           </div>
         )}

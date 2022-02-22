@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { AiOutlineRead, AiOutlineSave } from 'react-icons/ai';
+import { AiOutlineRead, AiFillLike } from 'react-icons/ai';
 import { Link, useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -82,7 +82,7 @@ const PinDetail = ({ user }) => {
 
   if (!pinDetail) {
     return (
-      <Spinner message="Showing pin" />
+      <Spinner message="Showing Ebook" />
     );
   }
 
@@ -113,24 +113,34 @@ const PinDetail = ({ user }) => {
               </a>
               {alreadySaved?.length !== 0
                 ? (
-                  <button
-                    type="button"
-                    className="bg-red-500 rounded-lg pl-3 pr-3 pt-2 pb-2 text-xl flex items-center justify-center text-white opacity-100 hover:opacity-100"
-                  >
-                    <AiOutlineSave /> Saved
-                  </button>
+                  <div className="flex">
+                    <div className="ml-4 mr-6">
+                      {pinDetail?.save?.length} <AiFillLike />
+                    </div>
+                    <button
+                      type="button"
+                      className="bg-red-500 rounded-lg pl-3 pr-3 pt-2 pb-2 text-xl flex items-center justify-center text-white opacity-100 hover:opacity-100"
+                    >
+                      <AiFillLike /> Liked
+                    </button>
+                  </div>
                 )
                 : (
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      savePin(pinDetail?._id);
-                    }}
-                    type="button"
-                    className="bg-red-500 rounded-lg pl-3 pr-3 pt-2 pb-2 text-xl flex items-center justify-center text-white opacity-100 hover:opacity-100"
-                  >
-                    {pinDetail?.save?.length} <AiOutlineSave />  {savingPost ? 'Saving' : 'Save'}
-                  </button>
+                  <div className="flex">
+                    <div className="ml-4 mr-6">
+                      {pinDetail?.save?.length ? pinDetail?.save?.length : '0'} <AiFillLike />
+                    </div>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        savePin(pinDetail?._id);
+                      }}
+                      type="button"
+                      className="bg-red-500 rounded-lg pl-3 pr-3 pt-2 pb-2 text-xl flex items-center justify-center text-white opacity-100 hover:opacity-100"
+                    >
+                      <AiFillLike />  {savingPost ? 'updating..' : 'Like'}
+                    </button>
+                  </div>
                 )}
             </div>
             <Link to={`/user-profile/${pinDetail?.postedBy._id}`} className="flex gap-2 mt-5 items-center bg-white rounded-lg ">
